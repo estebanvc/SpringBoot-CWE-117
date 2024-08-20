@@ -113,8 +113,7 @@ Evita que los datos proporcionados por el usuario se registren directamente en l
 public String escapeLogInput(String input) {
     if (input == null) {
         return null;
-    }  log.info("REST request to save UserInputDTO {}", LogUtils.escapeLogInput(userInputDto.toString()));
-        return ResponseEntity.ok(userInputDto);
+    }
     return input.replaceAll("\n", "\\\\n")
                 .replaceAll("\r", "\\\\r")
                 .replaceAll("\t", "\\\\t");
@@ -162,6 +161,16 @@ application.properties
 ```text
 logging.file.name=logs/application.log
 logging.pattern.file=%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %replace(%msg){'[\r\n]+', ' '}%n
+```
+
+Resultado en Log:
+```text
+2024-08-20 10:28:09.682 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2024-08-20 10:28:09.694 [main] INFO  c.d.lab.cwe117.Cwe117Application - Started Cwe117Application in 4.066 seconds (process running for 7.471)
+2024-08-20 10:28:18.902 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-20 10:28:18.902 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-20 10:28:18.904 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-08-20 10:28:19.077 [http-nio-8080-exec-1] INFO  c.develrox.lab.cwe117.TestController - REST request to save UserInputDTO UserInputDTO(name=Jack, lastName=Daniels) 2024-08-19T09:09:02.867-06:00  INFO 9999999 --- [xxxxxx] [xxxxxxxx] com.develrox.lab.cwe117.TestController   : Request to Save UserInputDTO(name=Test, lastName=Test)
 ```
 
 ## Conclusiones
